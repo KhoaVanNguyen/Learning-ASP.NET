@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BookStore.Models.Movie>
+
+@{
+    ViewBag.title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movie List</h2>
+
+@if( !Model.Any()  )
+{
+    <p> There is no movies  </p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
+                    <td> @movie.Name </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
