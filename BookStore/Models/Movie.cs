@@ -13,9 +13,9 @@ namespace BookStore.Models
         public byte GenreId { get; set; }
         public short NumberInStock { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ReleaseDate { get; set; }
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+     
+        public DateTime? ReleaseDate { get; set; }
+        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateAdded { get; set; }
 
     }

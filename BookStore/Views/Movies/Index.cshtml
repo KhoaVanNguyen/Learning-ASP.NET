@@ -7,6 +7,13 @@
 
 <h2>Movie List</h2>
 
+
+
+<button type="button" class="btn btn-primary"  onclick="location.href='@Url.Action("New","Movies")'"> Add New  </button>
+
+<br />
+<br />
+
 @if( !Model.Any()  )
 {
     <p> There is no movies  </p>
@@ -24,7 +31,7 @@ else
             @foreach (var movie in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
+                    <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
                     <td> @movie.Name </td>
                 </tr>
             }

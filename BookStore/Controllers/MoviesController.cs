@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using BookStore.Models;
+using BookStore.ViewModels;
 namespace BookStore.Controllers
 {
     public class MoviesController : Controller
@@ -22,12 +23,45 @@ namespace BookStore.Controllers
 
             return View(movies);
         }
-        [Route("movies/{id}")]
-        public ActionResult Details(int id)
+
+        public ActionResult New()
+        {
+            var movieViewModel = new MovieFormViewModel
+            {
+                Genres = _context.genres.ToList()
+            };
+            return View(movieViewModel);
+        }
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.movies.Add(movie);
+            } else
+            {
+                var movieInDb = _context.movies.Single(m => m.Id == movie.Id);
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.GenreId = movie.GenreId;
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Movies");
+        }
+
+
+        [Route("movies/edit/{id}")]
+        public ActionResult Edit(int id)
         {
             var movie = _context.movies.SingleOrDefault(c => c.Id == id);
 
             return View(movie);
         }
+
+
+
     }
 }
