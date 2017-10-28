@@ -29,22 +29,70 @@ namespace BookStore.Controllers
            return View(customers);
         }
 
-        [Route("customers/{id}")]
+      //  [Route("customers/{id}")]
         public ActionResult CustomerDetail(int id)
         {
             var customer = _context.customers.Include(c => c.MembershipType).SingleOrDefault(c => c.Id == id);
             return View(customer);
         }
 
-        [Route("customers/new")]
+        //[Route("customers/new")]
         public ActionResult New()
         {
             var membershipTypes = _context.membershipTypes;
-            var newCustomerViewModel = new NewCustomerViewModel
+            var newCustomerViewModel = new CustomerFormViewModel
             {
                 MembershipTypes = membershipTypes
             };
-            return View(newCustomerViewModel);
+            return View("CustomerForm",newCustomerViewModel);
+        }
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            if ( customer.Id == 0)
+            {
+                _context.customers.Add(customer);
+            }
+            else
+            {
+                var customerInDb = _context.customers.Single(c => c.Id == customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.birthDate = customer.birthDate;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubcribeToNewsletter = customer.IsSubcribeToNewsletter;
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Customers");
+        }
+
+        [Route("customers/edit/{id}")]
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.customers.SingleOrDefault(c => c.Id == id);
+            if ( customer == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new CustomerFormViewModel {
+                Customer = customer,
+                MembershipTypes = _context.membershipTypes.ToList(),
+            };
+
+            return View("CustomerForm", viewModel);
+        }
+
+        [Route("customers/delete/{id}")]
+        public ActionResult Delete(int id)
+        {
+            var customerInDb = _context.customers.Single(c => c.Id == id);
+
+            _context.customers.Remove(customerInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customers");
+
         }
 
     }

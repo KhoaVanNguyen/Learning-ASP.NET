@@ -1,4 +1,4 @@
-﻿@model BookStore.ViewModels.NewCustomerViewModel
+﻿@model BookStore.ViewModels.CustomerFormViewModel
 @{
     ViewBag.Title = "New Customer";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <h2>New Customer </h2>
 
-@using ( Html.BeginForm("Create","Customers"))
+@using ( Html.BeginForm("Save","Customers"))
 {
     <div class="form-group">
         <label> Customer's name: </label>
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label> Birthdate:  </label>
-        @Html.TextBoxFor(m => m.Customer.birthDate, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Customer.birthDate, "{0:d MMM yyy}",  new { @class = "form-control" })
     </div>
     <div class="checkbox">
         @Html.CheckBoxFor(m => m.Customer.IsSubcribeToNewsletter ) IsSubcribeToNewsletter
@@ -24,10 +24,16 @@
         @Html.LabelFor(m => m.Customer.MembershipTypeId)
         @Html.DropDownListFor( m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id","Name"), "Select Membership Type", new { @class = "form-control" } )
     </div>
-    <button type="submit" class="btn btn-primary">
-        Save
-    </button>
+    <br />
+
+
+    // Hidden fields
+    @Html.HiddenFor(m => m.Customer.Id);
+    <button type="submit" class="btn btn-primary"> Save </button>
 }
 
 
+<h2>Danger Zone</h2>
+<p class="bg-danger">Delete this customer.</p>
 
+<button type="button" onclick="location.href='@Url.Action("Delete","Customers", new { id = Model.Customer.Id  } )'"> Delete  </button>

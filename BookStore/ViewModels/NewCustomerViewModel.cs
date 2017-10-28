@@ -5,7 +5,7 @@ using System.Web;
 using BookStore.Models;
 namespace BookStore.ViewModels
 {
-    public class NewCustomerViewModel
+    public class CustomerFormViewModel
     {
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
 
