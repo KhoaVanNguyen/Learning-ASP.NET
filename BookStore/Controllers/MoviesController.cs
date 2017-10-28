@@ -30,7 +30,7 @@ namespace BookStore.Controllers
             {
                 Genres = _context.genres.ToList()
             };
-            return View(movieViewModel);
+            return View("MovieForm",movieViewModel);
         }
         [HttpPost]
         public ActionResult Save(Movie movie)
@@ -58,7 +58,12 @@ namespace BookStore.Controllers
         {
             var movie = _context.movies.SingleOrDefault(c => c.Id == id);
 
-            return View(movie);
+            var movieViewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                Genres = _context.genres.ToList()
+            };
+            return View("MovieForm", movieViewModel);
         }
 
 
