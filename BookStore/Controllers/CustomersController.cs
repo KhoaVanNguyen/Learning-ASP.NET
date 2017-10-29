@@ -22,8 +22,7 @@ namespace BookStore.Controllers
         // GET
         public ActionResult Index()
         {
-            var movie = new Movie() { Name = "Harry Potter" };
-
+            
             var customers = _context.customers.Include(c => c.MembershipType).ToList<Customer>();
 
            return View(customers);
@@ -42,13 +41,25 @@ namespace BookStore.Controllers
             var membershipTypes = _context.membershipTypes;
             var newCustomerViewModel = new CustomerFormViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
             return View("CustomerForm",newCustomerViewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            if ( !ModelState.IsValid)
+            {
+                var customerViewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.membershipTypes.ToList()
+                };
+                return View("CustomerForm", customerViewModel);
+            }
+
             if ( customer.Id == 0)
             {
                 _context.customers.Add(customer);

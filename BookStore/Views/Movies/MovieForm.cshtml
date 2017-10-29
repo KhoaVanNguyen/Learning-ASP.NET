@@ -8,9 +8,11 @@
 
 @using (Html.BeginForm("Save","Movies" ))
 {
+    @Html.ValidationSummary(true,"Please correct these erorrs:")
     <div class="form-group" >
         <label> Name:  </label>
          @Html.TextBoxFor( m => m.Movie.Name, new { @class = "form-control"  } )
+         @Html.ValidationMessageFor( m => m.Movie.Name )
     </div>
 
     <div class="form-group" >
@@ -26,6 +28,7 @@
     <div class="form-group" >
         <label> Number in stock: </label>
         @Html.TextBoxFor(m => m.Movie.NumberInStock, new { @class = "form-control" } )
+        @Html.ValidationMessageFor( m => m.Movie.NumberInStock )
     </div>
 
 
@@ -33,3 +36,6 @@
     <button type="submit" class="btn btn-primary" > Save  </button>
 }
 
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

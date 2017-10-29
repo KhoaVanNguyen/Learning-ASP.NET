@@ -255,9 +255,18 @@
     <Compile Include="Migrations\201710281422370_update-DateTimeTypeInMovie.Designer.cs">
       <DependentUpon>201710281422370_update-DateTimeTypeInMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710290313121_EditMovieClass.cs" />
+    <Compile Include="Migrations\201710290313121_EditMovieClass.Designer.cs">
+      <DependentUpon>201710290313121_EditMovieClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290324469_updateModels.cs" />
+    <Compile Include="Migrations\201710290324469_updateModels.Designer.cs">
+      <DependentUpon>201710290324469_updateModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerBirthdayValidation.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -383,6 +392,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710281422370_update-DateTimeTypeInMovie.resx">
       <DependentUpon>201710281422370_update-DateTimeTypeInMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290313121_EditMovieClass.resx">
+      <DependentUpon>201710290313121_EditMovieClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290324469_updateModels.resx">
+      <DependentUpon>201710290324469_updateModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -19,7 +19,7 @@ namespace BookStore.Controllers
         public ActionResult Index()
         {
 
-            var movies = _context.movies.ToList<Movie>();
+            var movies = _context.movies.Include(m => m.Genre).ToList<Movie>();
 
             return View(movies);
         }

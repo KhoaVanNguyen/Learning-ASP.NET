@@ -5,16 +5,18 @@
 }
 
 <h2>New Customer </h2>
-
+@Html.ValidationSummary(true, "Please correct these erorrs:")
 @using ( Html.BeginForm("Save","Customers"))
 {
     <div class="form-group">
         <label> Customer's name: </label>
         @Html.TextBoxFor(m => m.Customer.Name  , new { @class = "form-control"   })
+        @Html.ValidationMessageFor( m => m.Customer.Name )
     </div>
     <div class="form-group">
         <label> Birthdate:  </label>
         @Html.TextBoxFor(m => m.Customer.birthDate, "{0:d MMM yyy}",  new { @class = "form-control" })
+        @Html.ValidationMessageFor( m => m.Customer.birthDate )
     </div>
     <div class="checkbox">
         @Html.CheckBoxFor(m => m.Customer.IsSubcribeToNewsletter ) IsSubcribeToNewsletter
@@ -27,13 +29,16 @@
     <br />
 
 
-    // Hidden fields
-    @Html.HiddenFor(m => m.Customer.Id);
+     @Html.HiddenFor(m => m.Customer.Id)
+     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary"> Save </button>
 }
+@*
+    <h3>Danger Zone</h3>
+    <p class="bg-danger">Delete this customer</p>
+    <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Customers", new { id = Model.Customer.Id  } )'"> Delete  </button>
+*@
 
-
-<h2>Danger Zone</h2>
-<p class="bg-danger">Delete this customer.</p>
-
-<button type="button" class="btn btn-danger"  onclick="location.href='@Url.Action("Delete","Customers", new { id = Model.Customer.Id  } )'"> Delete  </button>
+@section scripts { 
+      @Scripts.Render("~/bundles/jqueryval")
+}

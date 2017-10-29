@@ -19,6 +19,7 @@ namespace BookStore.Models
         public byte MembershipTypeId { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [CustomerBirthdayValidation]
         public Nullable<DateTime> birthDate { get; set; }
     }
 }
