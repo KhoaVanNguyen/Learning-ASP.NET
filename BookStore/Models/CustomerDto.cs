@@ -15,7 +15,8 @@ namespace BookStore.Models
         public string Name { get; set; }
 
         public bool IsSubcribeToNewsletter { get; set; }
-        
+
+        public MembershipTypeDto MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }
 
         //[CustomerBirthdayValidation]

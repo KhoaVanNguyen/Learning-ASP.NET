@@ -22,10 +22,7 @@ namespace BookStore.Controllers
         // GET
         public ActionResult Index()
         {
-            
-            var customers = _context.customers.Include(c => c.MembershipType).ToList<Customer>();
-
-           return View(customers);
+           return View();
         }
 
       //  [Route("customers/{id}")]

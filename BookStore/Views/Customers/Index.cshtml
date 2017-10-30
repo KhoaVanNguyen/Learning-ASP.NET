@@ -10,31 +10,71 @@
 <br />
 <br />
 
-<table class="table table-bordered">
+<table id="customerTable" class="table table-bordered">
     <thead>
     <tr>
         <th>Id</th>
         <th>Customer Name</th>
         <th> Discount Rate </th>
+        <th> Delete  </th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var customer in Model )
-    {
-        <tr>
-            <td> @customer.Id  </td>
-            <td> 
-                @Html.ActionLink(@customer.Name,"Edit","Customers", new { id = @customer.Id  }, null)
-            </td>
-            <td>
-                @customer.MembershipType.Name
-            </td>
-        </tr>
-    } 
+  
     </tbody>
 </table> 
 
 
-   
+@section scripts
+{
+    <script>
 
+        var table = $("#customerTable").DataTable({
+            ajax: {
+                url: "/api/customers",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: "id"
+                },
+                {
+                    data: "name",
+                    render: function(data, type, customer) {
+                        return "<a href='/customers/edit/" + customer.id + "'>" + data + "</a>";
+                    }
+                },
+                {
+                    data: "membershipType.name"
+                },
+                {
+                    data: "id",
+                    render: function(data) {
+                        return "<button data-customer-id='" + data + "' class='btn-link js-delete'>Delete</button>";
+                    }
+                }
+            ]
+        });
 
+        $(document).ready(function() {
+            $("#customerTable").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);   
+                    bootbox.confirm("Are you sure",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "api/customers/" + button.attr("data-customer-id"),
+                                    method: "DELETE",
+                                    success: function () {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                })
+                            }
+                        })
+                })
+        })
+    </script>
+
+}
